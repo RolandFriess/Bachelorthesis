@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="C:\Users\askar\Desktop\miller-askar\ContactsApp\legendCore\build\intermediates\bundles\default\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="2ec293f66f206b9c0bd98a220b715e56574bf70e">
+        <dex dex="C:\Users\askar\Desktop\miller-askar\ContactsApp\app\build\intermediates\pre-dexed\debug\classes_2bff8bc4aeff25ddf04a0cc35c2e72d6d14bb730.jar" />
+    </item>
+
+</items>
