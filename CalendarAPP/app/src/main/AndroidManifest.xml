@@ -18,9 +18,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Verrauschen" />
         <activity android:name=".Filtern" />
-        <activity android:name=".Blockieren" />
         <activity android:name=".Vertikal" />
         <activity android:name=".Horizontal" />
         <activity android:name=".Test"></activity>

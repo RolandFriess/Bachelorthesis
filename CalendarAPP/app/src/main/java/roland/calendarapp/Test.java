@@ -12,6 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 public class Test extends AppCompatActivity {
     private static int MY_PERMISSIONS_REQUEST_READ_CALENDAR = 0;
@@ -26,6 +30,10 @@ public class Test extends AppCompatActivity {
 
     };
     private String selection = CalendarContract.Events.CALENDAR_ID +"= '3'";
+    private Cursor vorFilterung;
+    private Cursor nachFilterung;
+    private ArrayList<String> listAusgabe;
+    private ArrayAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +45,7 @@ public class Test extends AppCompatActivity {
     {
 
         Uri uri = CalendarContract.Events.CONTENT_URI;
+        listAusgabe=   new ArrayList<String>();
 
         ContentResolver contentResolver = getContentResolver();
         //Daten abrufen
@@ -49,8 +58,11 @@ public class Test extends AppCompatActivity {
         }
         else {
             Cursor cur = contentResolver.query(uri, EVENT_PROJECTION, selection, null, null);
+            vorFilterung = cur;
             Log.d("Anzahl Reihen original", " " + cur.getCount() + " ");
             Log.d("Anzahl Spalten original", " " + cur.getColumnCount() + " ");
+            listAusgabe.add("Anzahl Reihen vor Filterung: " + cur.getCount());
+            listAusgabe.add("Anzahl Spalten vor Filterung: "+ cur.getColumnCount());
 
             while (cur.moveToNext()) {
                 for (int i = 0; i < cur.getColumnCount(); i++) {
@@ -58,9 +70,21 @@ public class Test extends AppCompatActivity {
 
                 }
             }
-            Cursor cursorneu = MainActivity.datenFiltern(cur);
+            cur.moveToFirst();
+            for (int i = 0; i < 2;i++)
+            {
+                for(int x = 0;x< cur.getColumnCount();x++)
+                {
+                    listAusgabe.add("Vor Filterung " + cur.getColumnName(x) + ": "+ cur.getString(x));
+                }
+
+            }
+          Cursor cursorneu = MainActivity.datenFiltern(cur);
             Log.d("Anzahl Reihen", " " + cursorneu.getCount() + " ");
             Log.d("Anzahl Spalten", " " + cursorneu.getColumnCount() + " ");
+            listAusgabe.add("Anzahl Reihen nach Filterung: "+ cursorneu.getCount());
+            listAusgabe.add("Anzahl Spalten nach Filterung: " + cursorneu.getColumnCount());
+
             cursorneu.move(-1);
             while (cursorneu.moveToNext()) {
                 for (int i = 0; i < cursorneu.getColumnCount(); i++) {
@@ -68,6 +92,18 @@ public class Test extends AppCompatActivity {
 
                 }
             }
+            cursorneu.moveToFirst();
+            for (int i = 0; i < 2;i++)
+            {
+                for(int x = 0;x< cursorneu.getColumnCount();x++)
+                {
+                    listAusgabe.add("Nach Filterung " + cursorneu.getColumnName(x) + ": "+ cursorneu.getString(x));
+                }
+
+            }
+            mAdapter = new ArrayAdapter(this,R.layout.list_item_horizontaler_filter,listAusgabe);
+            ListView listView = findViewById(R.id.listViewtest);
+            listView.setAdapter(mAdapter);
 
         }
     }

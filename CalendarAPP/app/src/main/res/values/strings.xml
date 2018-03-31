@@ -7,7 +7,6 @@
     <string name="vertFilterAkt">Vertikaler Filter aktiviert</string>
     <string name="horizontalFilterAkt">Horizontaler Filter aktiviert</string>
     <string name="horizontalerFilter">Horizontalen Filter einstellen</string>
-    <string name="event_name">Event name</string>
     <string name="startzeit">Startzeit</string>
     <string name="endzeit">Endzeit</string>
     <string name="Standort">Standort</string>
@@ -18,4 +17,5 @@
     <string name="test">Testen</string>
     <string name="filterSpeichern" />
     <string name="filterUebernehmen">Filter übernehmen</string>
+    <string name="aktHorizontaleFilter">Liste der aktiven Horizontalen Filter</string>
 </resources>

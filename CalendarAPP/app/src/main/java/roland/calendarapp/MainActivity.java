@@ -17,10 +17,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        //Initialisierung falls Horizontal noch nicht initialisiert
+        Horizontal.horizontalerFilter = new String[1];
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        AvareCalendarProvider avare = new AvareCalendarProvider();
         vertikalerFilter = new Boolean[]{
                 false,
                 //Filter aktiviert für TITLE
@@ -34,11 +34,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void verrauschen(View view) {
-        Intent intent = new Intent(this, Verrauschen.class);
-        startActivity(intent);
-
-    }
 
     public void filtern(View view) {
         Intent intent = new Intent(this, Filtern.class);
@@ -46,11 +41,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void blockieren(View view) {
-        Intent intent = new Intent(this, Blockieren.class);
-        startActivity(intent);
-
-    }
 
     public void testen(View view) {
         Intent intent = new Intent(this, Test.class);
@@ -64,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < cursor.getColumnCount(); i++) {
             if (cursor.getColumnName(i).equals(CalendarContract.Events.CALENDAR_DISPLAY_NAME)) {
                 horizontaleFilterungMoeglich = true;
+                Log.d("datenFiltern","horizontaleFilterungmoeglich = true");
             }
         }
 
@@ -88,8 +79,8 @@ public class MainActivity extends AppCompatActivity {
                 boolean wirduebernommen = true;
 
                 for (int y = 0; y < Horizontal.horizontalerFilter.length; y++) {
-                    String cal_ID = cursor.getString(cursor.getColumnIndex(CalendarContract.Events.CALENDAR_ID));
-                    if (cal_ID == Horizontal.horizontalerFilter[y]) {
+                    String cal_ID = cursor.getString(cursor.getColumnIndex(CalendarContract.Events.CALENDAR_DISPLAY_NAME));
+                    if (cal_ID.equals(Horizontal.horizontalerFilter[y])) {
                         wirduebernommen = false;
                         Log.d("datenFiltern", "Wird nicht uebernommen");
                     }
@@ -105,10 +96,10 @@ public class MainActivity extends AppCompatActivity {
                     for (int z = 0; z < cursor.getColumnCount(); z++) {
 
                         if (Filtern.vertikalerFilterakt) {
-                            if (vertikalerFilter[0] == true && CalendarContract.Events.TITLE == cursor.getColumnName(z) ||
-                                    vertikalerFilter[1] == true && CalendarContract.Events.DTSTART == cursor.getColumnName(z) ||
-                                    vertikalerFilter[2] == true && CalendarContract.Events.DTEND == cursor.getColumnName(z) ||
-                                    vertikalerFilter[3] == true && CalendarContract.Events.EVENT_LOCATION == cursor.getColumnName(z)) {
+                            if (vertikalerFilter[0] == true && CalendarContract.Events.TITLE.equals(cursor.getColumnName(z)) ||
+                                    vertikalerFilter[1] == true && CalendarContract.Events.DTSTART.equals(cursor.getColumnName(z)) ||
+                                    vertikalerFilter[2] == true && CalendarContract.Events.DTEND.equals(cursor.getColumnName(z)) ||
+                                    vertikalerFilter[3] == true && CalendarContract.Events.EVENT_LOCATION.equals(cursor.getColumnName(z))) {
                                 neueReihe[z] = null;
                             }
                         } else {
@@ -135,10 +126,10 @@ public class MainActivity extends AppCompatActivity {
                 for (int z = 0; z < cursor.getColumnCount(); z++) {
 
 
-                    if (Filtern.vertikalerFilterakt && vertikalerFilter[0] == true && CalendarContract.Events.TITLE == cursor.getColumnName(z) ||
-                            vertikalerFilter[1] == true && CalendarContract.Events.DTSTART == cursor.getColumnName(z) ||
-                            vertikalerFilter[2] == true && CalendarContract.Events.DTEND == cursor.getColumnName(z) ||
-                            vertikalerFilter[3] == true && CalendarContract.Events.EVENT_LOCATION == cursor.getColumnName(z)) {
+                    if (Filtern.vertikalerFilterakt && vertikalerFilter[0] == true && CalendarContract.Events.TITLE.equals( cursor.getColumnName(z)) ||
+                            vertikalerFilter[1] == true && CalendarContract.Events.DTSTART.equals( cursor.getColumnName(z)) ||
+                            vertikalerFilter[2] == true && CalendarContract.Events.DTEND.equals( cursor.getColumnName(z)) ||
+                            vertikalerFilter[3] == true && CalendarContract.Events.EVENT_LOCATION.equals( cursor.getColumnName(z))) {
                         neueReihe[z] = null;
                     } else {
                         String add = cursor.getString(z);

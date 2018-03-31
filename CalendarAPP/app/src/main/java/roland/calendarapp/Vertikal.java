@@ -56,6 +56,7 @@ public class Vertikal extends AppCompatActivity {
         if(checkLoc.isChecked()){
             vertikalerFilter[3] = true;
         }
+        MainActivity.vertikalerFilter =vertikalerFilter;
         Toast.makeText(this,"Änderungen übernommen", Toast.LENGTH_LONG).show();
     }
 
